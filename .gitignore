@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Documentos locales
+CV_Erick Fernando Cabay Yanqui.docx
