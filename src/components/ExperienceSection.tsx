@@ -1,4 +1,4 @@
-import { Experience } from '../types';
+import type { Experience } from '../types';
 
 type ExperienceSectionProps = {
   items: Experience[];

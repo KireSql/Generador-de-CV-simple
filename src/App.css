@@ -31,6 +31,14 @@
   transform: translateY(-1px);
 }
 
+.no-export {
+  /* Se oculta en modo exportación */
+}
+
+.no-print {
+  display: none !important;
+}
+
 .sidebar {
   background: var(--panel);
   padding: 18px;
@@ -187,6 +195,13 @@
   line-height: 1.5;
 }
 
+/* Evitar cortes bruscos */
+.card,
+.subcard {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
 h1 {
   margin: 6px 0 2px;
   font-size: 2rem;
@@ -287,5 +302,96 @@ h4 {
   .photo-card {
     padding: 14px;
   }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  :root,
+  body {
+    background: #fff;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0;
+    gap: 14px;
+    grid-template-columns: 280px 1fr;
+  }
+
+  .toolbar,
+  .primary-btn,
+  .photo-controls,
+  .inline-editor,
+  .badge,
+  .hint,
+  .ghost,
+  .control-row,
+  .control-actions,
+  .no-export {
+    display: none !important;
+  }
+
+  .card,
+  .subcard,
+  .photo-card,
+  .sidebar {
+    box-shadow: none;
+    border-color: #ddd;
+  }
+
+  .clickable {
+    cursor: default;
+  }
+
+  .photo-card {
+    pointer-events: none;
+  }
+}
+
+/* Modo exportación a PDF (html2canvas + jsPDF) */
+body.exporting {
+  background: #fff;
+}
+
+body.exporting .page {
+  width: 210mm;
+  max-width: 210mm;
+  margin: 0 auto;
+  gap: 14px;
+  grid-template-columns: 280px 1fr;
+}
+
+body.exporting .toolbar,
+body.exporting .primary-btn,
+body.exporting .photo-controls,
+body.exporting .inline-editor,
+body.exporting .badge,
+body.exporting .hint,
+body.exporting .ghost,
+body.exporting .control-row,
+body.exporting .control-actions,
+body.exporting .no-export {
+  display: none !important;
+}
+
+body.exporting .card,
+body.exporting .subcard,
+body.exporting .photo-card,
+body.exporting .sidebar {
+  box-shadow: none;
+  border-color: #ddd;
+}
+
+body.exporting .clickable {
+  cursor: default;
+}
+
+body.exporting .photo-card {
+  pointer-events: none;
 }
 

@@ -1,4 +1,4 @@
-import { CustomSection, Education, Experience } from '../types';
+import type { CustomSection, Education, Experience } from '../types';
 import { uid } from '../utils/uid';
 
 export const defaultExperiences: Experience[] = [

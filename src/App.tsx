@@ -1,6 +1,14 @@
 import { useMemo, useRef, useState } from 'react';
 import './App.css';
-import { Contact, CustomSection, Education, Experience, PhotoTransform, Profile } from './types';
+import { useEffect } from 'react';
+import type {
+  Contact,
+  CustomSection,
+  Education,
+  Experience,
+  PhotoTransform,
+  Profile,
+} from './types';
 import { defaultCustomSections, defaultEducation, defaultExperiences } from './data/defaults';
 import { uid } from './utils/uid';
 import { PhotoCard } from './components/PhotoCard';
@@ -12,8 +20,10 @@ import { ObjectiveCard } from './components/ObjectiveCard';
 import { ExperienceSection } from './components/ExperienceSection';
 import { CustomSections } from './components/CustomSections';
 import { Toolbar } from './components/Toolbar';
+import { exportElementToPdf } from './utils/pdf';
 
 function App() {
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [activeEditor, setActiveEditor] = useState<string | null>(null);
   const [profile, setProfile] = useState<Profile>({
@@ -78,8 +88,20 @@ function App() {
 
   const resetPhotoTransform = () => setPhotoTransform({ scale: 1, x: 0, y: 0 });
 
-  const handleDownload = () => {
-    window.print();
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('exporting');
+    };
+  }, []);
+
+  const handleDownload = async () => {
+    setActiveEditor(null);
+    document.body.classList.add('exporting');
+    await new Promise((resolve) => setTimeout(resolve, 80));
+    if (contentRef.current) {
+      await exportElementToPdf(contentRef.current, 'cv.pdf');
+    }
+    document.body.classList.remove('exporting');
   };
 
   const updateExperience = (id: string, key: keyof Experience, value: string) => {
@@ -157,7 +179,7 @@ function App() {
   const closeEditor = () => setActiveEditor(null);
 
   return (
-    <div className="page">
+    <div className="page" ref={contentRef}>
       <Toolbar onDownload={handleDownload} />
 
       <aside className="sidebar">

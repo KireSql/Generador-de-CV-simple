@@ -1,5 +1,5 @@
-import { RefObject } from 'react';
-import { PhotoTransform } from '../types';
+import type { RefObject } from 'react';
+import type { PhotoTransform } from '../types';
 
 type PhotoCardProps = {
   photo: string;

@@ -1,4 +1,4 @@
-import { Contact } from '../types';
+import type { Contact } from '../types';
 
 type ContactCardProps = {
   contact: Contact;

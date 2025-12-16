@@ -1,4 +1,4 @@
-import { CustomSection } from '../types';
+import type { CustomSection } from '../types';
 
 type CustomSectionsProps = {
   items: CustomSection[];
